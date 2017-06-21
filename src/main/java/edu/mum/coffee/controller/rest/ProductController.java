@@ -2,6 +2,7 @@ package edu.mum.coffee.controller.rest;
 
 import edu.mum.coffee.domain.Product;
 import edu.mum.coffee.service.ProductService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -31,18 +32,25 @@ public class ProductController {
     }
 
     @RequestMapping(value="/update/{id}",method=RequestMethod.PUT)
-    public Response updateProduct(@RequestBody Product product, @PathVariable int id){
+    public ResponseEntity updateProduct(@RequestBody Product product, @PathVariable int id){
         try {
           product.setId(id);
             productService.save(product);
-            return Response.ok().entity("Success").build();
+            return ResponseEntity.ok("Success");
         }
         catch(Exception e){
-            return Response.status(500).entity(e.getMessage()).build();
+            return ResponseEntity.status(500).body(e.getMessage());
         }
 
     }
 
+    @DeleteMapping("/delete")
+
+    public void deleteProduct(@RequestParam int id){
+          Product product=productService.getProduct(id);
+          productService.delete(product);
+
+    }
 
 }
 
