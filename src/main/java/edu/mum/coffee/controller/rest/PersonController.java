@@ -27,13 +27,14 @@ public class PersonController {
         return personService.findById(id);
     }
 
-    @RequestMapping(value = "/find", method = RequestMethod.GET)
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
     public List<Person> findByEmail(@RequestParam("email") String email) { // RequestParam is used because email doesnot work on path variable
         return personService.findByEmail(email);
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.PUT)
     public void update(@RequestBody Person person) {
+        
         personService.savePerson(person);
     }
 }

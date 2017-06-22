@@ -8,18 +8,24 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import javax.annotation.Resource;
+import javax.sql.DataSource;
+
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+    @Resource
+    private DataSource dataSource;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/", "/home", "/index").permitAll()
+                .antMatchers("/", "/home", "/index","/register","/registrationForm").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .httpBasic()
-                .and()
+              /*  .httpBasic()
+                .and()*/
                 .formLogin()
                 .permitAll()
                 .and()
@@ -32,7 +38,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().withUser("super").password("pw").roles("ADMIN");
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {/*
+        auth.inMemoryAuthentication().withUser("super").password("pw").roles("ADMIN");*/
+        auth.jdbcAuthentication().dataSource(dataSource).usersByUsernameQuery("select email,password, enabled from users where email=?")
+                .authoritiesByUsernameQuery("select user_id, authority from authorities where user_id=(select id from users where email=?)");
     }
 }

@@ -1,5 +1,7 @@
 package edu.mum.coffee.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -18,6 +20,7 @@ public class Orderline {
 	@OneToOne
 	private Product product;
 	@ManyToOne
+	@JsonBackReference
 	private Order order;
 
 	public int getQuantity() {
