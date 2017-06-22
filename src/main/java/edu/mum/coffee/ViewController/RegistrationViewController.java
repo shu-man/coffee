@@ -30,7 +30,7 @@ public class RegistrationViewController {
             personService.savePerson(person);
             return "redirect:/login";
         }
-        return "register";
+        return null;
     }
 
     @GetMapping("/profile")
@@ -42,8 +42,9 @@ public class RegistrationViewController {
     @PostMapping("/editProfile")
     public String editProfile(@Valid Person person, BindingResult result) {
         person.setPassword(personService.findById(person.getId()).getPassword());
-        personService.savePerson(person);
-        return "redirect:/myProfile";
+        person.setAuthorities(personService.findById(person.getId()).getAuthorities());
+        personService.saveP(person);
+        return "redirect:/profile";
     }
 
 

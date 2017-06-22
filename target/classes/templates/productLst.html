@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>Index</title>
 </head>
 
@@ -23,10 +23,10 @@
         <td th:text="${product.description}">Good</td>
         <td>
             <form th:action="@{/orderNow}" method="post">
-            <input type="number" name="quantity"/>
-            <input type="hidden" th:value="${product.id}" name="productId"/>
-            <button type="submit">AddOrder</button>
-        </form>
+                <input type="number" name="quantity"/>
+                <input type="hidden" th:value="${product.id}" name="productId"/>
+                <button type="submit">AddOrder</button>
+            </form>
         </td>
     </tr>
 </table>

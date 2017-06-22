@@ -34,8 +34,14 @@ public class PersonController {
 
     @RequestMapping(value = "/update", method = RequestMethod.PUT)
     public void update(@RequestBody Person person) {
-        
-        personService.savePerson(person);
+
+        personService.update(person);
     }
+
+    @GetMapping
+    public List<Person> getPersonList() {
+        return personService.findAll();
+    }
+
 }
 

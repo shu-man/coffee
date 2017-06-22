@@ -5,9 +5,6 @@ package edu.mum.coffee.domain;
  */
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import org.hibernate.FetchMode;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 

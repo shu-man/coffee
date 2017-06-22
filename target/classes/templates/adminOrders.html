@@ -16,8 +16,8 @@
         <th>TotalQuantity</th>
         <th>OrderLine</th>
     </tr>
-    <!--/*@thymesVar id="order" type="edu.mum.coffee.domain.Order"*/-->
-    <tr th:each="order : ${orders}">
+    <!--/*@thymesVar id="adminOrders" type="edu.mum.coffee.domain.Order"*/-->
+    <tr th:each="order : ${adminOrders}">
         <td th:text="${order.orderDate}">Onions</td>
         <td th:text="${order.totalAmount}">2.41</td>
         <td th:text="${order.quantity}">Good</td>

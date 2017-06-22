@@ -2,23 +2,67 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <title>You are in!</title>
 </head>
 <body>
 
-<h1>You made it!</h1>
+<h2> Hello, <span sec:authentication="name">Anonymous</span></h2>
 
-<h2> Hello, <span sec:authentication="name">Anonymous</span> </h2>
+<h3> You are logged in as <span sec:authentication="principal.authorities">USER</span></h3>
 
-<h3> You are logged in as <span sec:authentication="principal.authorities">USER</span> </h3>
+<div sec:authorize="hasAuthority('ADMIN')">
+    <ul>
+        <li><a href="#" th:href="@{/adminOrderList}">OrderList</a></li>
+        <li><a href="#" th:onclick="'javascript:listUsers()'">List Users</a></li>
+        <li><a href="#" th:href="@{/createNewPerson}">Create User</a></li>
 
-<div sec:authorize="hasAuthority('user')">
-    ADMIN
+    </ul>
+
+
+    <div style="display: none;" class="userList">
+        <table border="1">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Address</th>
+            </tr>
+            </thead>
+            <tbody id="usersList"></tbody>
+        </table>
+    </div>
+    <script>
+        function listUsers() {
+            $.ajax({
+                url: "/person",
+                method: "get",
+                success: function (data) {
+                    var users = "";
+                    $.each(data, function (key, value) {
+                        users += "<tr>" +
+                            "<td>" + value.firstName + " " + value.lastName + "</td>" +
+                            "<td>" + value.email + "</td>" +
+                            "<td>" + value.phone + "</td>" +
+                            "<td>" + value.address.city + " " + value.address.state + " " + value.address.country + "</td>" +
+                            "</tr>";
+                    });
+                    $("#usersList").html(users);
+                    $("#usersList").closest(".userList").show();
+                }
+            });
+
+        }
+    </script>
 </div>
+<ul>
+    <li><a href="#" th:href="@{/logout}">logout</a> <br/></li>
+    <li><a th:href="@{/profile}">My profile</a></li>
+</ul>
 
-<a href="#" th:href="@{/logout}">logout</a> <br/>
-<a th:href="@{/profile}">My profile</a>
+
 
 </body>
 </html>
