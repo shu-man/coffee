@@ -11,6 +11,10 @@
 <li><a th:href="@{/secure}"> Go to Login Page </a>
 </li>
 <li><a th:href="@{/productList}">Product List</a></li>
+    <li th:if="${#authorization.expression('isAuthenticated()')}"><a th:href="@{/orderLst}">Order List</a></li>
+
+    <li th:if="${#authorization.expression('isAuthenticated()')}"><a th:href="@{/profile}">Profile</a></li>
+
 </ul>
 </body>
 </html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Order</title>
+</head>
+
+<body>
+
+<h1>OrderList</h1>
+
+<table border="1">
+    <tr>
+        <th>OrderDate</th>
+        <th>TotalPrice</th>
+        <th>TotalQuantity</th>
+        <th>OrderLine</th>
+    </tr>
+    <!--/*@thymesVar id="order" type="edu.mum.coffee.domain.Order"*/-->
+    <tr th:each="order : ${orders}">
+        <td th:text="${order.orderDate}">Onions</td>
+        <td th:text="${order.totalAmount}">2.41</td>
+        <td th:text="${order.quantity}">Good</td>
+        <td>
+            <table>
+                <tr> <th>ProductName</th>
+                    <th>ProductPrice</th>
+                    <th>Quantity</th>
+                </tr>
+                <tr th:each="orderline:${order.orderLines}">
+                    <td th:text="${orderline.product.productName}"></td>
+                    <td th:text="${orderline.product.price}"></td>
+                    <td th:text="${orderline.quantity}"></td>
+                </tr>
+            </table>
+
+        </td>
+    </tr>
+</table>
+
+<p>
+    <a href="index.html" th:href="@{/}">Return to home</a>
+</p>
+
+</body>
+
+</html>
